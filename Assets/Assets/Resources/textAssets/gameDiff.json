@@ -1,0 +1,7 @@
+
+{"gamediff":
+	[ {"monNum":5, "name":"easy"},
+	  {"monNum":10, "name":"normal"},
+	  {"monNum":15, "name":"hard"}
+	]
+}
