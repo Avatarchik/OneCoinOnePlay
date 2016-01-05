@@ -39,16 +39,16 @@ public class WarriorAnimationDemoFREE : MonoBehaviour
 			animator.SetBool("Running", false);
 		}
 
-		if (Input.GetButtonDown("Fire1"))
-		{
-			animator.SetTrigger("Attack1Trigger");
-			if (warrior == Warrior.Brute)
-				StartCoroutine (COStunPause(1.2f));
-			else if (warrior == Warrior.Sorceress)
-				StartCoroutine (COStunPause(1.2f));
-			else
-				StartCoroutine (COStunPause(.6f));
-		}
+		//if (Input.GetButtonDown("Fire1"))
+		//{
+		//	animator.SetTrigger("Attack1Trigger");
+		//	if (warrior == Warrior.Brute)
+		//		StartCoroutine (COStunPause(1.2f));
+		//	else if (warrior == Warrior.Sorceress)
+		//		StartCoroutine (COStunPause(1.2f));
+		//	else
+		//		StartCoroutine (COStunPause(.6f));
+		//}
 
 		UpdateMovement();  //update character position and facing
 	}
