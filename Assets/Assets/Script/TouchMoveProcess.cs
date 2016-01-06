@@ -23,6 +23,7 @@ public class TouchMoveProcess : MonoBehaviour
     {
 
         if (Input.touchCount == 0) return;
+        if (Input.touchCount == 2) return;
         screenToTouch = view_Camera.ScreenPointToRay(Input.GetTouch(0).position);
 
         TouchPhase touchPhase = Input.GetTouch(0).phase;

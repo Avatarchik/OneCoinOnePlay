@@ -25,10 +25,11 @@ public class MonsterGenerator : MonoBehaviour {
     public void Init(int _initMaxNum, int _initGameLevel)
     {
         maxMonsterNum = _initMaxNum;
+        curGameLevel = _initGameLevel;
+
         spwanPositions[0] = genPosition0;
         spwanPositions[1] = genPosition1;
         spwanPositions[2] = genPosition2;
-        // p.s. GetComponentsInChildren ( 0번 원소는 최상위 root 오브젝트이다. )
         monsterPrefabGroup = monsterGroups.GetComponentsInChildren<MonstersGroup>();
 
         StartGenerate();
@@ -57,7 +58,7 @@ public class MonsterGenerator : MonoBehaviour {
     private void CreateMonster()
     {
         int randomNum = Random.Range(0, 3); 
-        GameObject prefab = monsterPrefabGroup[curGameLevel + 1 /* 0번원소는 최상위 root*/].GetMonster((MonstersGroup.MONSTER_TYPE)randomNum);
+        GameObject prefab = monsterPrefabGroup[curGameLevel].GetMonster((MonstersGroup.MONSTER_TYPE)randomNum);
         Instantiate(prefab, spwanPositions[Random.Range(0, 3)].position,
                new Quaternion(0, 0, 0, 0));
         AddMonsterNum();
