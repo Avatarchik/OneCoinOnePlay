@@ -65,7 +65,7 @@ public class LineRendererBehaviour : MonoBehaviour
     }
     else
     {
-      tTarget = effectSettings.Target.transform;
+      tTarget = effectSettings.Target;
       var targetDirection = (tTarget.position - tRoot.position).normalized;
       if (Physics.Raycast(tRoot.position, targetDirection, out hit, effectSettings.MoveDistance + 1, effectSettings.LayerMask))
       {

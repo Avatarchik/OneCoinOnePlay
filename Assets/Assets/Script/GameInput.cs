@@ -29,9 +29,7 @@ public class GameInput : MonoBehaviour {
                 shotStartPos.position,
                 new Quaternion(0, 0, 0, 0)) as GameObject;
             EffectSettings shotSettings = shotObject.GetComponent<EffectSettings>();
-            GameObject test = new GameObject();
-            test.transform.position = hitPoint.point;
-            shotSettings.Target = test;
+            shotSettings.Target = hitPoint.transform;
 
         }
         isShotInterval = true;

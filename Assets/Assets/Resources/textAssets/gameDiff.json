@@ -1,7 +1,14 @@
 
 {"gamediff":
-	[ {"monNum":5, "name":"easy"},
-	  {"monNum":10, "name":"normal"},
-	  {"monNum":15, "name":"hard"}
+	[ {"levelName":"easy_0",
+	 "level":"0",
+	 "mobMaxNum":"10"
+	 },
+
+	 {"levelName":"easy_1",
+	 "level":"1",
+	 "mobMaxNum":"13"
+	 }
+	  
 	]
 }

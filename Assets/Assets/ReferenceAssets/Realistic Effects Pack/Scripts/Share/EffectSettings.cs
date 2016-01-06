@@ -5,7 +5,7 @@ public class EffectSettings : MonoBehaviour
 {
 	public float ColliderRadius = 0.2f;
 	public float EffectRadius = 0;
-	public GameObject Target;
+	public Transform Target;
 	public float MoveSpeed = 1;
 	public float MoveDistance = 20;
 	public bool IsHomingMove;

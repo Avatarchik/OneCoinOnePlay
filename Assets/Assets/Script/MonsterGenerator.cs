@@ -4,59 +4,62 @@ using System.Collections;
 public class MonsterGenerator : MonoBehaviour {
 
     [SerializeField]
-    private GameObject monsterPrefab0;
+    private GameObject monsterGroups;
+    private MonstersGroup[] monsterPrefabGroup;
     [SerializeField]
-    private float genTime = 1.0f;
+    private float spwanTime = 1.0f;
     [SerializeField]
     private Transform genPosition0;
     [SerializeField]
     private Transform genPosition1;
     [SerializeField]
     private Transform genPosition2;
-    [SerializeField]
-    private int maxMonsterNum = 5;
+
+    private int maxMonsterNum = 0;
     private int curMonsterNum = 0;
+    private int curGameLevel = 0;
+    public void SetCurGameLevel(int _level) { curGameLevel = _level; }
 
-    private Transform[] arrPositions = new Transform[3];
+    private Transform[] spwanPositions = new Transform[3];
 
-    void Start()
+    public void Init(int _initMaxNum, int _initGameLevel)
     {
-        arrPositions[0] = genPosition0;
-        arrPositions[1] = genPosition1;
-        arrPositions[2] = genPosition2;
+        maxMonsterNum = _initMaxNum;
+        spwanPositions[0] = genPosition0;
+        spwanPositions[1] = genPosition1;
+        spwanPositions[2] = genPosition2;
+        // p.s. GetComponentsInChildren ( 0번 원소는 최상위 root 오브젝트이다. )
+        monsterPrefabGroup = monsterGroups.GetComponentsInChildren<MonstersGroup>();
+
         StartGenerate();
     }
 
-    public void StartGenerate()
-    {
-        StartCoroutine(GenProcess());
-    }
+    public void SetMaxMonsterNum(int _maxNum) { maxMonsterNum = _maxNum; }
 
-    public void StopGenerate()
-    {
-        StopCoroutine(GenProcess());
-    }
+    public void StartGenerate() { StartCoroutine(GenProcess()); }
+    public void StopGenerate() { StopCoroutine(GenProcess()); }
 
-    public void AddMonsterNum()
-    {
-        if (curMonsterNum < maxMonsterNum) curMonsterNum++;
-    }
-    public void SubMonsterNum()
-    {
-        if (curMonsterNum > 0) curMonsterNum--;
-    }
+    public void AddMonsterNum() { if (curMonsterNum < maxMonsterNum) curMonsterNum++; }
+    public void SubMonsterNum() { if (curMonsterNum > 0) curMonsterNum--; }
 
     IEnumerator GenProcess()
     {
         while(true)
         {
-            yield return new WaitForSeconds(genTime);
+            yield return new WaitForSeconds(spwanTime);
             if(curMonsterNum < maxMonsterNum)
             {
-                Instantiate(monsterPrefab0, arrPositions[Random.Range(0,3)].position,
-                new Quaternion(0, 0, 0, 0));
-                AddMonsterNum();
+                CreateMonster();
             }
         }
+    }
+
+    private void CreateMonster()
+    {
+        int randomNum = Random.Range(0, 3); 
+        GameObject prefab = monsterPrefabGroup[curGameLevel + 1 /* 0번원소는 최상위 root*/].GetMonster((MonstersGroup.MONSTER_TYPE)randomNum);
+        Instantiate(prefab, spwanPositions[Random.Range(0, 3)].position,
+               new Quaternion(0, 0, 0, 0));
+        AddMonsterNum();
     }
 }

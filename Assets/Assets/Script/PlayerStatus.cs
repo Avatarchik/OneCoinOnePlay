@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerStatus : MonoBehaviour {
 
     private PLAYER_MAGIC_TYPE curPlayerMagic = PLAYER_MAGIC_TYPE.NORMAL_SHOT;
+    [HideInInspector]
     public enum PLAYER_MAGIC_TYPE
     {
         NORMAL_SHOT,
