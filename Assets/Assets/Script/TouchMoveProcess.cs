@@ -7,78 +7,145 @@ using System.Collections;
 public class TouchMoveProcess : MonoBehaviour
 {
 
-    private Ray screenToTouch;
+    private Ray screenRay;
     private RaycastHit rayCastHit;
+    private Vector3 screenToWorldPoint;
 
     [SerializeField]
     private Camera view_Camera;
 
     [SerializeField]
     private CharacterController chController;
+    [SerializeField]
+    private Animator chAnimator;
 
-    // player to touchPoint
+    [SerializeField]
+    private GameObject joyStickBack;
+    private float radiusOfJoySticBack;
+    [SerializeField]
+    private GameObject joyStickFront;
+
     private Vector3 dirVector;
+    private float moveSpeed = 2.0f;
+    private float joyStickSpeed = 2.0f;
+    // for max joyStick area 
+    private readonly float extendArea = 10.0f;
+
+    private Vector3 startPointXZ;
+    private Vector3 endPointXZ;
+    private enum POINT_TYPE
+    {
+        START_POINT,
+        END_POINT
+    }
+
+    private int screenHalfWidth;
     
+    void Start()
+    {
+        UISprite spr = joyStickBack.GetComponent<UISprite>();
+        radiusOfJoySticBack = (spr.width / 2) + extendArea;
+        screenHalfWidth = Screen.width / 2;
+    }
+
 	void Update ()
     {
-
         if (Input.touchCount == 0) return;
-        if (Input.touchCount == 2) return;
-        screenToTouch = view_Camera.ScreenPointToRay(Input.GetTouch(0).position);
-
+        Vector2 touchPoint = Input.GetTouch(0).position;
+        if (touchPoint.x > screenHalfWidth) return;
+        screenRay = view_Camera.ScreenPointToRay(touchPoint);
+        screenToWorldPoint = view_Camera.ScreenToWorldPoint(touchPoint);
+       
         TouchPhase touchPhase = Input.GetTouch(0).phase;
         switch (touchPhase)
         {
             case TouchPhase.Began:
                 {
-                    // to do
+                    JoyStickPosInit();
+                    CalcScreenToWorldPoint(POINT_TYPE.START_POINT);
+                    FollowTouchPoint();
                 }
                 break;
             case TouchPhase.Moved:
                 {
-                    MoveCharacter();
+                    CalcScreenToWorldPoint(POINT_TYPE.END_POINT);
+                    FollowTouchPoint();
                     RotateCharacter();
+                    MoveCharacter();
                 }
                 break;
             case TouchPhase.Stationary:
                 {
-                    MoveCharacter();
+                    CalcScreenToWorldPoint(POINT_TYPE.END_POINT);
+                    FollowTouchPoint();
                     RotateCharacter();
+                    MoveCharacter();
                 }
                 break;
 
             case TouchPhase.Ended:
                 {
-
+                    JoyStickRePos();
                 }
                 break;
             case TouchPhase.Canceled:
                 {
-
+                    JoyStickRePos();
                 }
                 break;
         }
 
     }
 
+    private void CalcScreenToWorldPoint(POINT_TYPE _TYPE)
+    {
+        switch(_TYPE)
+        {
+            case POINT_TYPE.START_POINT:
+                startPointXZ = screenToWorldPoint;
+                startPointXZ.z = startPointXZ.y;
+                startPointXZ.y = 0.0f;
+                break;
+            case POINT_TYPE.END_POINT:
+                endPointXZ = screenToWorldPoint;
+                endPointXZ.z = endPointXZ.y;
+                endPointXZ.y = 0.0f;
+                break;
+            default:
+                //Debug.Log("POINT_TYPE_ERROR");
+                break;
+        }
+    }
+
     private void MoveCharacter()
     {
-        if (CalcDirVector()) chController.Move(dirVector * Time.deltaTime * 2.0f);
-        else return;
+        if (CalcDirVector())
+        {
+            chController.Move(dirVector * Time.deltaTime * moveSpeed);
+            chAnimator.SetBool("Moving", true);
+            chAnimator.SetBool("Running", true);
+        }
+        else
+        {
+            chAnimator.SetBool("Moving", false);
+            chAnimator.SetBool("Running", false);
+            return;
+        }
     }
 
     private bool CalcDirVector()
     {
-        if (Physics.Raycast(screenToTouch, out rayCastHit))
+        if (Physics.Raycast(screenRay, out rayCastHit))
         {
-            Vector3 touchPoint = rayCastHit.point;
-            dirVector = touchPoint - gameObject.transform.position;
+            //calculate for dirVector in XZ plane
+            dirVector = endPointXZ - startPointXZ;
             dirVector.Normalize();
-
             return true;
         }
         else
+        {
             return false;
+        }
     }
 
     private void RotateCharacter()
@@ -86,11 +153,45 @@ public class TouchMoveProcess : MonoBehaviour
         if (CalcDirVector())
         {
             Quaternion endRotation = Quaternion.LookRotation(dirVector, Vector3.up);
-            gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation,
-                endRotation,
-                Time.deltaTime * 2.0f);
+            gameObject.transform.rotation = endRotation;
+            //gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation,
+            //    endRotation,
+            //    Time.deltaTime * 2.0f);
+
         }
-        else return;
+    }
+    private void JoyStickPosInit()
+    {
+        joyStickFront.transform.position = screenToWorldPoint;
+        joyStickBack.transform.position = screenToWorldPoint;
+    }
+
+    private void JoyStickRePos()
+    {
+        joyStickFront.transform.position = joyStickBack.transform.position;
+    }
+
+    private void FollowTouchPoint()
+    {
+        if (Physics.Raycast(screenRay, out rayCastHit)) 
+        {
+            Vector3 frontBackUpPos = joyStickFront.transform.position;
+            Vector3 touchToPosition = Vector3.Lerp(joyStickFront.transform.position,
+                rayCastHit.point, Time.deltaTime);
+            if (ChkMovableJoyStick(touchToPosition))
+                joyStickFront.transform.position = touchToPosition;
+            else
+                joyStickFront.transform.position = frontBackUpPos;
+        }
+    }
+    private bool ChkMovableJoyStick(Vector3 _toWorldPoint)
+    {
+        Vector3 startVec = joyStickBack.transform.position;
+        Vector3 endVec = _toWorldPoint;
+        float distance = Vector3.Distance(startVec, endVec);
+
+        if (distance <= radiusOfJoySticBack) return true;
+        else return false;
     }
 
 }
