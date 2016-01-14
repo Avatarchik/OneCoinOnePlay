@@ -26,10 +26,8 @@ public class TouchMoveProcess : MonoBehaviour
     private GameObject joyStickFront;
 
     private Vector3 dirVector;
-    private float moveSpeed = 2.0f;
+    private float moveSpeed = 1.5f;
     private float joyStickSpeed = 2.0f;
-    // for max joyStick area 
-    private readonly float extendArea = 10.0f;
 
     private Vector3 startPointXZ;
     private Vector3 endPointXZ;
@@ -44,7 +42,7 @@ public class TouchMoveProcess : MonoBehaviour
     void Start()
     {
         UISprite spr = joyStickBack.GetComponent<UISprite>();
-        radiusOfJoySticBack = (spr.width / 2) + extendArea;
+        radiusOfJoySticBack = spr.width / 2;
         screenHalfWidth = Screen.width / 2;
     }
 
@@ -177,7 +175,7 @@ public class TouchMoveProcess : MonoBehaviour
         {
             Vector3 frontBackUpPos = joyStickFront.transform.position;
             Vector3 touchToPosition = Vector3.Lerp(joyStickFront.transform.position,
-                rayCastHit.point, Time.deltaTime);
+                rayCastHit.point, Time.deltaTime * joyStickSpeed);
             if (ChkMovableJoyStick(touchToPosition))
                 joyStickFront.transform.position = touchToPosition;
             else

@@ -32,14 +32,17 @@ public class BaseShotProcess : MonoBehaviour {
         }
         
     }
+    IEnumerator DeActive()
+    {
+        yield return new WaitForSeconds(afterEffectPartice.duration);
+        gameObject.SetActive(false);
+    }
     
     public void OnTriggerEnter(Collider coll)
     {
-        Debug.Log("Shot Hit");
-        
         StopCoroutine(shotMoveRoutine);
         shotParticle.Stop();
         afterEffect.SetActive(true);
-        Destroy(gameObject, afterEffectPartice.duration);
+        StartCoroutine(DeActive());
     }
 }

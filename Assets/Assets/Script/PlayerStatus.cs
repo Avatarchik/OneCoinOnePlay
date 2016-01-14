@@ -10,7 +10,7 @@ public class PlayerStatus : MonoBehaviour {
         NORMAL_SHOT,
         ADVANCED_SHOT
     }
-    public PLAYER_MAGIC_TYPE GetCurPlayerMagic() { return curPlayerMagic; }
+    //public PLAYER_MAGIC_TYPE GetCurPlayerMagic() { return curPlayerMagic; }
     public void SetCurPlayerMagic(PLAYER_MAGIC_TYPE _type) { curPlayerMagic = _type; }
    
 
@@ -18,8 +18,6 @@ public class PlayerStatus : MonoBehaviour {
     private GameObject shot0;
     [SerializeField]
     private GameObject shot1;
-    [SerializeField]
-    private GameObject shot2;
 
     public GameObject GetPlayerShot()
     {
