@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour {
         arr_gameLevel = gameDiffLevel.GetLevelData();
         curGameDiffLevel = arr_gameLevel[0].GetLevel();
 
-        //gameMonGenerator.Init(10, 0);
+        gameMonGenerator.Init(10, 0);
 	}
 	
 }

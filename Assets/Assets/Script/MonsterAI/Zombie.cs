@@ -8,9 +8,10 @@ public class Zombie : MonoBehaviour {
     private Animator monsterAnimator;
     private MonsterGenerator monGenerator;
     private CapsuleCollider capColl;
-
     private string[] deathAni = new string[3];
-    void Start()
+    private IEnumerator moveCoroutine;
+  
+    public void Init()
     {
         navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -18,25 +19,30 @@ public class Zombie : MonoBehaviour {
         monGenerator = GameObject.FindGameObjectWithTag("MonGenerator").GetComponent<MonsterGenerator>();
         capColl = gameObject.GetComponent<CapsuleCollider>();
 
+        navMeshAgent.enabled = true;
+        capColl.enabled = true;
+
         deathAni[0] = "death01";
         deathAni[1] = "death02";
         deathAni[2] = "death03";
-
-        StartCoroutine(MovingProcess());
+        moveCoroutine = MovingProcess();
+        StartCoroutine(moveCoroutine);
     }
 
     public void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") ||
+            collision.gameObject.CompareTag("PlayerShot"))
         {
             StartCoroutine(DeadProcess());
         }
     }
+    
+
     IEnumerator DeadProcess()
     {
-        monGenerator.SubMonsterNum();
         monsterAnimator.Play(deathAni[Random.Range(0, 3)]);
-        StopCoroutine(MovingProcess());
+        StopCoroutine(moveCoroutine);
         navMeshAgent.enabled = false;
         capColl.enabled = false;
 
@@ -49,7 +55,7 @@ public class Zombie : MonoBehaviour {
             yield return new WaitForSeconds(0.05f);
             sec -= 0.05f;
         }
-        DestroyImmediate(gameObject);
+        gameObject.SetActive(false);
     }
     IEnumerator MovingProcess()
     {

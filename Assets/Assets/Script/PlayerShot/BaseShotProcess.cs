@@ -28,7 +28,7 @@ public class BaseShotProcess : MonoBehaviour {
         while(true)
         {
             gameObject.transform.position += dirVec * Time.deltaTime * 5.0f;
-            yield return new WaitForSeconds(0.03f);
+            yield return null;
         }
         
     }

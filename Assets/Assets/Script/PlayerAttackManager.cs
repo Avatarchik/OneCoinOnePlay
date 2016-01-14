@@ -23,6 +23,7 @@ public class PlayerAttackManager : MonoBehaviour {
             playerShots[idx] = Instantiate(shotPrefab,
                                 shotStartPos.transform.position,
                                 new Quaternion(0, 0, 0, 0)) as GameObject;
+            playerShots[idx].SetActive(false);
         }
     }
 
