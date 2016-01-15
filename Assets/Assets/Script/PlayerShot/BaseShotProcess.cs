@@ -14,12 +14,17 @@ public class BaseShotProcess : MonoBehaviour {
     private IEnumerator shotMoveRoutine;
     
 
-	void Start ()
+	public void Init()
     {
-        playerPos = GameObject.FindGameObjectWithTag("Player").transform;
-        dirVec = playerPos.forward;
-
+        playerPos = GameObject.Find("Player").transform;
         shotMoveRoutine = ShotMoving();
+        gameObject.SetActive(false);
+        afterEffect.SetActive(false);
+    }
+
+    public void StartShotProcess()
+    {
+        dirVec = playerPos.forward;
         StartCoroutine(shotMoveRoutine);
     }
 
@@ -35,14 +40,20 @@ public class BaseShotProcess : MonoBehaviour {
     IEnumerator DeActive()
     {
         yield return new WaitForSeconds(afterEffectPartice.duration);
+        afterEffect.SetActive(false);
         gameObject.SetActive(false);
     }
     
     public void OnTriggerEnter(Collider coll)
     {
-        StopCoroutine(shotMoveRoutine);
-        shotParticle.Stop();
-        afterEffect.SetActive(true);
-        StartCoroutine(DeActive());
+        if(coll.tag.Equals("Monster") ||
+          (coll.tag.Equals("Wall")))
+        {
+            StopCoroutine(shotMoveRoutine);
+            shotParticle.Stop();
+            afterEffect.SetActive(true);
+            StartCoroutine(DeActive());
+        }
+        
     }
 }

@@ -60,7 +60,7 @@ public class MonsterGenerator : MonoBehaviour {
             }
             monsterList[idx].SetActive(true);
             monsterList[idx].transform.position = spwanPositions[Random.Range(0, 3)].position;
-            monsterList[idx].GetComponent<Zombie>().Init();
+            monsterList[idx].GetComponent<Zombie>().ReSet();
             idx++;
         }
     }
@@ -73,6 +73,7 @@ public class MonsterGenerator : MonoBehaviour {
             GameObject prefab = monsterPrefabGroup[curGameLevel].GetMonster((MonstersGroup.MONSTER_TYPE)randomNum);
             GameObject monster = Instantiate(prefab, 
                 new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0)) as GameObject;
+            monster.GetComponent<Zombie>().Init();
             monster.SetActive(false);
             monsterList.Add(monster);
         }

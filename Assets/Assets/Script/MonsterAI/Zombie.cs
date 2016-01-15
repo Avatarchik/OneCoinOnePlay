@@ -6,7 +6,6 @@ public class Zombie : MonoBehaviour {
     private NavMeshAgent navMeshAgent;
     private Transform playerTransform;
     private Animator monsterAnimator;
-    private MonsterGenerator monGenerator;
     private CapsuleCollider capColl;
     private string[] deathAni = new string[3];
     private IEnumerator moveCoroutine;
@@ -16,16 +15,19 @@ public class Zombie : MonoBehaviour {
         navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         monsterAnimator = gameObject.GetComponent<Animator>();
-        monGenerator = GameObject.FindGameObjectWithTag("MonGenerator").GetComponent<MonsterGenerator>();
         capColl = gameObject.GetComponent<CapsuleCollider>();
-
-        navMeshAgent.enabled = true;
-        capColl.enabled = true;
 
         deathAni[0] = "death01";
         deathAni[1] = "death02";
         deathAni[2] = "death03";
         moveCoroutine = MovingProcess();
+        StartCoroutine(moveCoroutine);
+    }
+
+    public void ReSet()
+    {
+        navMeshAgent.enabled = true;
+        capColl.enabled = true;
         StartCoroutine(moveCoroutine);
     }
 
@@ -62,7 +64,9 @@ public class Zombie : MonoBehaviour {
         while (true)
         {
             if (navMeshAgent.enabled == true)
+            {
                 navMeshAgent.destination = playerTransform.position;
+            }
             yield return new WaitForSeconds(0.5f);
         }
 

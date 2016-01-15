@@ -17,13 +17,13 @@ public class PlayerAttackManager : MonoBehaviour {
     
     void Start()
     {
-        for(int idx = 0; idx < 20; idx++)
+        for(int idx = 0; idx < maxShots; idx++)
         {
             GameObject shotPrefab = playerStatus.GetPlayerShot();
             playerShots[idx] = Instantiate(shotPrefab,
                                 shotStartPos.transform.position,
                                 new Quaternion(0, 0, 0, 0)) as GameObject;
-            playerShots[idx].SetActive(false);
+            playerShots[idx].GetComponent<BaseShotProcess>().Init();
         }
     }
 
@@ -34,9 +34,15 @@ public class PlayerAttackManager : MonoBehaviour {
 
     private void AttackStart()
     {
-        if (curShotIdx > 20) curShotIdx = 0;
+        if (curShotIdx >= maxShots) curShotIdx = 0;
+        if (playerShots[curShotIdx].activeSelf == true)
+        {
+            curShotIdx++;
+            return;
+        }
         playerShots[curShotIdx].SetActive(true);
         playerShots[curShotIdx].transform.position = shotStartPos.transform.position;
+        playerShots[curShotIdx].GetComponent<BaseShotProcess>().StartShotProcess();
         curShotIdx++;
     }
     
