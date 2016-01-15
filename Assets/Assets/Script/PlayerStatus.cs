@@ -3,6 +3,9 @@ using System.Collections;
 
 public class PlayerStatus : MonoBehaviour {
 
+    [SerializeField]
+    private GameObject playerObject;
+
     private PLAYER_MAGIC_TYPE curPlayerMagic = PLAYER_MAGIC_TYPE.NORMAL_SHOT;
     [HideInInspector]
     public enum PLAYER_MAGIC_TYPE
@@ -18,7 +21,6 @@ public class PlayerStatus : MonoBehaviour {
     private GameObject shot0;
     [SerializeField]
     private GameObject shot1;
-
     public GameObject GetPlayerShot()
     {
         if (curPlayerMagic == PLAYER_MAGIC_TYPE.NORMAL_SHOT)
@@ -28,4 +30,11 @@ public class PlayerStatus : MonoBehaviour {
         else
             return null;
     }
+
+    [SerializeField]
+    private GameObject skill_Shield;
+    [SerializeField]
+    private GameObject skill_Bomb;
+    public GameObject GetSkill_Shield() { return skill_Shield;  }
+    public GameObject GetSkill_Bomb() { return skill_Bomb; }
 }

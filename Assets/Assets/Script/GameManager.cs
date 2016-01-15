@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 게임의 흐름을 관리하는 게임매니저.
+/// </summary>
 public class GameManager : MonoBehaviour {
 
     [SerializeField]

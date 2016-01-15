@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 플레이어 공격 관리 매니저.
+/// </summary>
 public class PlayerAttackManager : MonoBehaviour {
 
     [SerializeField]
