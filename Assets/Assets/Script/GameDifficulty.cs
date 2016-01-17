@@ -4,19 +4,25 @@ using System.Collections.Generic;
 
 public class GameLevel
 {
-    private string gamelevelName;
-    private int gameLevel;
-    private int gameMobMaxNum;
-
-    public void SetLevelName(string _name) { gamelevelName = _name; }
-    public string GetLevelName() { return gamelevelName; }
+    private string _gameLevelName;
+    public string gameLevelName
+    {
+        get { return _gameLevelName; }
+        set { _gameLevelName = value; }
+    }
+    private int _gameLevel;
+    public int gameLevel
+    {
+        get { return _gameLevel; }
+        set { _gameLevel = value; }
+    }
+    private int _gameMobMaxNum;
+    public int gameMobMaxNum
+    {
+        get { return _gameMobMaxNum; }
+        set { _gameMobMaxNum = value; }
+    }
     
-    public void SetLevel(int _lev) { gameLevel = _lev; }
-    public int GetLevel() { return gameLevel; }
-
-    public void SetMobMaxNum(int _maxNum) { gameMobMaxNum = _maxNum; }
-    public int GetMobMaxNum() { return gameMobMaxNum; }
-
 }
 
 public class GameDifficulty : MonoBehaviour {
@@ -50,10 +56,10 @@ public class GameDifficulty : MonoBehaviour {
             jsonDataSheet[idx].TryGetValue("level", out level);
             string mobMaxNum;
             jsonDataSheet[idx].TryGetValue("mobMaxNum", out mobMaxNum);
-           
-            gameLevelData[idx].SetLevelName(levelName);
-            gameLevelData[idx].SetLevel(int.Parse(level));
-            gameLevelData[idx].SetMobMaxNum(int.Parse(mobMaxNum));
+
+            gameLevelData[idx].gameLevelName = levelName;
+            gameLevelData[idx].gameLevel = int.Parse(level);
+            gameLevelData[idx].gameMobMaxNum = int.Parse(mobMaxNum);
 
             
             

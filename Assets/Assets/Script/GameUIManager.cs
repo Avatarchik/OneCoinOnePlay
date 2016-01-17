@@ -10,6 +10,11 @@ public class GameUIManager : MonoBehaviour {
     private PlayerAttackManager playerAtkMgr;
     [SerializeField]
     private PlayerSkillManager playerSkillMgr;
+    [SerializeField]
+    private UIButton btn_SkillShield;
+    [SerializeField]
+    private UIButton btn_SkillBomb;
+
     
     public void ClickAttackBtn()
     {
@@ -18,6 +23,7 @@ public class GameUIManager : MonoBehaviour {
     
     public void ClickSkill_SheildBtn()
     {
+        btn_SkillShield.isEnabled = false;
         playerSkillMgr.Skill_ShieldStart();
     }
 }

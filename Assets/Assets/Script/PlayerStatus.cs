@@ -30,11 +30,17 @@ public class PlayerStatus : MonoBehaviour {
         else
             return null;
     }
-
+    
     [SerializeField]
     private GameObject skill_Shield;
+    public GameObject skillShield
+    {
+        get { return skill_Shield; }
+    }
     [SerializeField]
     private GameObject skill_Bomb;
-    public GameObject GetSkill_Shield() { return skill_Shield;  }
-    public GameObject GetSkill_Bomb() { return skill_Bomb; }
+    public GameObject skillBomb
+    {
+        get { return skill_Bomb; }
+    }
 }

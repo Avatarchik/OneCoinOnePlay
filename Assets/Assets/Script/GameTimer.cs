@@ -5,8 +5,8 @@ using System.Diagnostics;
 
 public struct GameTime
 {
-    Stopwatch stopWatch;
-    TimeSpan timeSpan;
+    private Stopwatch stopWatch;
+    private TimeSpan timeSpan;
     public void InitTime()
     {
         stopWatch = new Stopwatch();

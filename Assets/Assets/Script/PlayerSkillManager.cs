@@ -11,7 +11,7 @@ public class PlayerSkillManager : MonoBehaviour {
     private GameObject skillShield;
     public void Skill_ShieldStart()
     {
-        skillShield = playerStatus.GetSkill_Shield();
+        skillShield = playerStatus.skillShield;
         skillShield.SetActive(true);
         skillShield.transform.position = gameObject.transform.position;
         skillShield.transform.position += new Vector3(0.0f, 1.0f, 0.0f);
