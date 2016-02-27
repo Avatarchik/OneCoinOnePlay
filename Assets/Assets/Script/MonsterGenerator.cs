@@ -16,25 +16,38 @@ public class MonsterGenerator : MonoBehaviour {
     [SerializeField]
     private Transform genPosition2;
 
+    [SerializeField]
+    private Transform inGameMonsters;
+
     private int maxMonsterNum = 0;
-    private int curMonsterNum = 0;
-    private List<GameObject> monsterList = new List<GameObject>();
-    private int curGameLevel = 0;
-    public void SetCurGameLevel(int _level) { curGameLevel = _level; }
+    private List<List<GameObject>> monsterList;
+    private int _curGameLevel = 0;
+    public int curGameLevel
+    {
+        set { _curGameLevel = value; }
+    }
 
     private Transform[] spwanPositions = new Transform[3];
 
     public void Init(int _initMaxNum, int _initGameLevel)
     {
         maxMonsterNum = _initMaxNum;
-        curGameLevel = _initGameLevel;
+        _curGameLevel = _initGameLevel;
 
         spwanPositions[0] = genPosition0;
         spwanPositions[1] = genPosition1;
         spwanPositions[2] = genPosition2;
-        monsterPrefabGroup = monsterGroups.GetComponentsInChildren<MonstersGroup>();
 
-        CreateMonster();
+        // 몬스터 프리팹그룹의 각 인덱스는 게임레벨과 연동되어진다.
+        monsterPrefabGroup = monsterGroups.GetComponentsInChildren<MonstersGroup>();
+        int allLevelCnt = monsterPrefabGroup.Length;
+        monsterList = new List<List<GameObject>>();
+
+        for (int idx = 0; idx < allLevelCnt; ++idx)
+        {
+            monsterList.Add(new List<GameObject>());
+            CreateMonster(idx);
+        }
         StartGenerate();
     }
 
@@ -53,29 +66,30 @@ public class MonsterGenerator : MonoBehaviour {
         {
             yield return new WaitForSeconds(spwanTime);
             if (idx >= maxMonsterNum) idx = 0;
-            if (monsterList[idx].activeSelf == true)
+            if (monsterList[_curGameLevel][idx].activeSelf == true)
             {
                 idx++;
                 continue;
             }
-            monsterList[idx].SetActive(true);
-            monsterList[idx].transform.position = spwanPositions[Random.Range(0, 3)].position;
-            monsterList[idx].GetComponent<Zombie>().ReSet();
+            monsterList[_curGameLevel][idx].SetActive(true);
+            monsterList[_curGameLevel][idx].transform.position = spwanPositions[Random.Range(0, 3)].position;
+            monsterList[_curGameLevel][idx].GetComponent<Zombie>().ReSet();
             idx++;
         }
     }
 
-    private void CreateMonster()
+    private void CreateMonster(int gameLevel)
     {
-        for (curMonsterNum = 0; curMonsterNum < maxMonsterNum; curMonsterNum++)
+        for (int curMonsterNum = 0; curMonsterNum < maxMonsterNum; curMonsterNum++)
         {
             int randomNum = Random.Range(0, 3);
-            GameObject prefab = monsterPrefabGroup[curGameLevel].GetMonster((MonstersGroup.MONSTER_TYPE)randomNum);
+            GameObject prefab = monsterPrefabGroup[gameLevel].GetMonster((MonstersGroup.MONSTER_TYPE)randomNum);
             GameObject monster = Instantiate(prefab, 
                 new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0)) as GameObject;
             monster.GetComponent<Zombie>().Init();
             monster.SetActive(false);
-            monsterList.Add(monster);
+            monster.transform.parent = inGameMonsters;
+            monsterList[gameLevel].Add(monster);
         }
     }
 }

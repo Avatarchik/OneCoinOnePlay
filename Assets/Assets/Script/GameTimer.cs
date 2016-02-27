@@ -13,7 +13,7 @@ public struct GameTime
         stopWatch.Start();
     }
 
-    public string GetTime()
+    public string GetFormatTime()
     {
         timeSpan = stopWatch.Elapsed;
         string elapsedTime = string.Format("{0:00}:{1:00}.{2:00}",
@@ -23,37 +23,54 @@ public struct GameTime
         return elapsedTime;
     }
 
-    public void EndStopWatch()
+    public double GetSec()
     {
-        stopWatch.Stop();
+        timeSpan = stopWatch.Elapsed;
+        return timeSpan.TotalSeconds;
     }
-
+    public void StartStopWatch() { stopWatch.Start(); }
+    public void EndStopWatch() { stopWatch.Stop(); }
 }
 
-public class GameTimer : MonoBehaviour {
+public class GameTimer : MonoBehaviour
+{
 
     [SerializeField]
     private UILabel lbl_gameTime;
-    private GameTime gameTime;
+    private GameTime _gameTime;
+    public GameTime gameTime
+    {
+        get { return _gameTime; }
+    }
     IEnumerator gameTimeCoRoutine;
+
+    private bool isTimerOn = false;
 
     public void InitGameTimer()
     {
-        gameTime.InitTime();
+        _gameTime.InitTime();
         gameTimeCoRoutine = TimeProcess();
+        isTimerOn = true;
         StartCoroutine(gameTimeCoRoutine);
 	}
-    public void EndGameTimer()
+    public void StopGameTimer()
     {
-        gameTime.EndStopWatch();
+        isTimerOn = false;
+        _gameTime.EndStopWatch();
         StopCoroutine(gameTimeCoRoutine);
+    }
+    public void ReStartGameTimer()
+    {
+        isTimerOn = true;
+        _gameTime.StartStopWatch();
+        StartCoroutine(gameTimeCoRoutine);
     }
 
     IEnumerator TimeProcess()
     {
-        while(true)
+        while(isTimerOn)
         {
-            lbl_gameTime.text = gameTime.GetTime();
+            lbl_gameTime.text = _gameTime.GetFormatTime();
             yield return null;
         }
     }

@@ -8,6 +8,31 @@
 	 {"levelName":"easy_1",
 	 "level":"1",
 	 "mobMaxNum":"13"
+	 },
+	 
+	 {"levelName":"normal_0",
+	 "level":"2",
+	 "mobMaxNum":"16"
+	 },
+	 
+	 {"levelName":"normal_1",
+	 "level":"3",
+	 "mobMaxNum":"20"
+	 },
+	 
+	 {"levelName":"normal_2",
+	 "level":"4",
+	 "mobMaxNum":"25"
+	 },
+	 
+	 {"levelName":"hard_0",
+	 "level":"5",
+	 "mobMaxNum":"27"
+	 },
+	 
+	 {"levelName":"hard_1",
+	 "level":"6",
+	 "mobMaxNum":"29"
 	 }
 	  
 	]

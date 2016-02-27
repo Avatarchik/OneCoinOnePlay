@@ -34,8 +34,11 @@ public class GameDifficulty : MonoBehaviour {
     ///           jsonDataSheet[0].TryGetValue(x,x) 0번 레벨의 세부내용 접근.
     /// </summary>
     private List<Dictionary<string, string>> jsonDataSheet;
-    private GameLevel[] gameLevelData;
-    public GameLevel[] GetLevelData() { return gameLevelData; }
+    private GameLevel[] _gameLevelData;
+    public GameLevel[] gameLevelData
+    {
+        get { return _gameLevelData; } 
+    }
 
     public void Init()
     {
@@ -46,10 +49,10 @@ public class GameDifficulty : MonoBehaviour {
         AccessData(gameDiffJsonObj);
 
         int maxGameLevel = jsonDataSheet.Count;
-        gameLevelData = new GameLevel[maxGameLevel];
+        _gameLevelData = new GameLevel[maxGameLevel];
         for(int idx = 0; idx < jsonDataSheet.Count; ++idx)
         {
-            gameLevelData[idx] = new GameLevel();
+            _gameLevelData[idx] = new GameLevel();
             string levelName;
             jsonDataSheet[idx].TryGetValue("levelName", out levelName);
             string level;
@@ -57,9 +60,9 @@ public class GameDifficulty : MonoBehaviour {
             string mobMaxNum;
             jsonDataSheet[idx].TryGetValue("mobMaxNum", out mobMaxNum);
 
-            gameLevelData[idx].gameLevelName = levelName;
-            gameLevelData[idx].gameLevel = int.Parse(level);
-            gameLevelData[idx].gameMobMaxNum = int.Parse(mobMaxNum);
+            _gameLevelData[idx].gameLevelName = levelName;
+            _gameLevelData[idx].gameLevel = int.Parse(level);
+            _gameLevelData[idx].gameMobMaxNum = int.Parse(mobMaxNum);
 
             
             

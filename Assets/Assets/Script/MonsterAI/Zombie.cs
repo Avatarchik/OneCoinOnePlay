@@ -33,8 +33,10 @@ public class Zombie : MonoBehaviour {
 
     public void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.CompareTag("Player") ||
-            collision.gameObject.CompareTag("PlayerShot"))
+        if ( collision.gameObject.CompareTag("Player") ||
+             collision.gameObject.CompareTag("PlayerShot") ||
+             collision.gameObject.CompareTag("Skill_Shield") ||
+             collision.gameObject.CompareTag("Skill_Bomb"))
         {
             StartCoroutine(DeadProcess());
         }

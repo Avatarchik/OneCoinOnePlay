@@ -21,7 +21,7 @@ public class PlayerSkillManager : MonoBehaviour {
     
     public void Skill_BombStart()
     {
-
+        // 추가 예정.
     }
     
 }
