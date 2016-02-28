@@ -19,8 +19,16 @@ public class MonsterGenerator : MonoBehaviour {
     [SerializeField]
     private Transform inGameMonsters;
 
-    private int maxMonsterNum = 0;
+    private IEnumerator monSpawnCoroutine;
+
+    private int _maxMonsterNum = 0;
+    public int maxMonsterNum
+    {
+        set { _maxMonsterNum = value; }
+    }
+
     private List<List<GameObject>> monsterList;
+
     private int _curGameLevel = 0;
     public int curGameLevel
     {
@@ -28,11 +36,15 @@ public class MonsterGenerator : MonoBehaviour {
     }
 
     private Transform[] spwanPositions = new Transform[3];
+    private GameLevel[] gameLevelGroups;
 
-    public void Init(int _initMaxNum, int _initGameLevel)
+    public void Init(GameLevel[] levelGroup)
     {
-        maxMonsterNum = _initMaxNum;
-        _curGameLevel = _initGameLevel;
+        monSpawnCoroutine = MonSpawnProcess();
+        gameLevelGroups = levelGroup;
+
+        _maxMonsterNum = gameLevelGroups[0].gameMobMaxNum;
+        _curGameLevel = gameLevelGroups[0].gameLevel;
 
         spwanPositions[0] = genPosition0;
         spwanPositions[1] = genPosition1;
@@ -46,26 +58,24 @@ public class MonsterGenerator : MonoBehaviour {
         for (int idx = 0; idx < allLevelCnt; ++idx)
         {
             monsterList.Add(new List<GameObject>());
-            CreateMonster(idx);
+            CreateMonster(idx, gameLevelGroups[idx].gameMobMaxNum);
         }
-        StartGenerate();
+        StartMonSpawn();
     }
 
-    public void SetMaxMonsterNum(int _maxNum) { maxMonsterNum = _maxNum; }
-
-    public void StartGenerate() { StartCoroutine(GenProcess()); }
-    public void StopGenerate() { StopCoroutine(GenProcess()); }
+    public void StartMonSpawn() { StartCoroutine(monSpawnCoroutine); }
+    public void StopMonSpawn() { StopCoroutine(monSpawnCoroutine); }
 
     //public void AddMonsterNum() { if (curMonsterNum < maxMonsterNum) curMonsterNum++; }
     //public void SubMonsterNum() { if (curMonsterNum > 0) curMonsterNum--; }
 
-    IEnumerator GenProcess()
+    IEnumerator MonSpawnProcess()
     {
         int idx = 0;
         while(true)
         {
             yield return new WaitForSeconds(spwanTime);
-            if (idx >= maxMonsterNum) idx = 0;
+            if (idx >= _maxMonsterNum) idx = 0;
             if (monsterList[_curGameLevel][idx].activeSelf == true)
             {
                 idx++;
@@ -78,9 +88,9 @@ public class MonsterGenerator : MonoBehaviour {
         }
     }
 
-    private void CreateMonster(int gameLevel)
+    private void CreateMonster(int gameLevel, int maxCreateNum)
     {
-        for (int curMonsterNum = 0; curMonsterNum < maxMonsterNum; curMonsterNum++)
+        for (int curMonsterNum = 0; curMonsterNum < maxCreateNum; curMonsterNum++)
         {
             int randomNum = Random.Range(0, 3);
             GameObject prefab = monsterPrefabGroup[gameLevel].GetMonster((MonstersGroup.MONSTER_TYPE)randomNum);

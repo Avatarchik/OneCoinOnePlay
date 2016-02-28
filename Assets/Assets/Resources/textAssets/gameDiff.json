@@ -1,36 +1,36 @@
 
 {"gamediff":
-	[ {"levelName":"easy_0",
+	[ {"levelName":"WAVE 0 START",
 	 "level":"0",
 	 "mobMaxNum":"10"
 	 },
 
-	 {"levelName":"easy_1",
+	 {"levelName":"WAVE 1 START",
 	 "level":"1",
 	 "mobMaxNum":"13"
 	 },
 	 
-	 {"levelName":"normal_0",
+	 {"levelName":"WAVE 2 START",
 	 "level":"2",
 	 "mobMaxNum":"16"
 	 },
 	 
-	 {"levelName":"normal_1",
+	 {"levelName":"WAVE 3 START",
 	 "level":"3",
 	 "mobMaxNum":"20"
 	 },
 	 
-	 {"levelName":"normal_2",
+	 {"levelName":"WAVE 4 START",
 	 "level":"4",
 	 "mobMaxNum":"25"
 	 },
 	 
-	 {"levelName":"hard_0",
+	 {"levelName":"WAVE 5 START",
 	 "level":"5",
 	 "mobMaxNum":"27"
 	 },
 	 
-	 {"levelName":"hard_1",
+	 {"levelName":"WAVE 6 START",
 	 "level":"6",
 	 "mobMaxNum":"29"
 	 }
