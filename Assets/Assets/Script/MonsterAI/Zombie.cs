@@ -9,7 +9,7 @@ public class Zombie : MonoBehaviour {
     private CapsuleCollider capColl;
     private string[] deathAni = new string[3];
     private IEnumerator moveCoroutine;
-  
+    
     public void Init()
     {
         navMeshAgent = gameObject.GetComponent<NavMeshAgent>();

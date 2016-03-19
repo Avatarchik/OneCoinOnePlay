@@ -7,10 +7,10 @@ public class Test : MonoBehaviour {
 	void Start () {
 
         iTween.ColorTo(gameObject,
-                       iTween.Hash("color", Color.yellow,
-                       "time", 2.0f,
+                       iTween.Hash("color", new Color(0.2f, 0.1f, 0.5f, 0.1f),
+                       "time", 0.5f,
                        "looptype", iTween.LoopType.loop));
-	}
-	
-	
+    }
+
+
 }

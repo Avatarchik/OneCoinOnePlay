@@ -4,11 +4,11 @@ using System.Collections;
 public class MonstersGroup : MonoBehaviour {
 
     [SerializeField]
-    private GameObject monsterPrefab;
+    private GameObject normalMonsterPrefab;
     [SerializeField]
-    private GameObject AdvacedMonsterPrefab;
+    private GameObject advacedMonsterPrefab;
     [SerializeField]
-    private GameObject ChampionMonsterPrefab;
+    private GameObject championMonsterPrefab;
 
     [HideInInspector]
     public enum MONSTER_TYPE
@@ -22,11 +22,11 @@ public class MonstersGroup : MonoBehaviour {
         switch(_type)
         {
             case MONSTER_TYPE.NORMAL:
-                return monsterPrefab;
+                return normalMonsterPrefab;
             case MONSTER_TYPE.ADVANCED:
-                return AdvacedMonsterPrefab;
+                return advacedMonsterPrefab;
             case MONSTER_TYPE.CHAMPION:
-                return ChampionMonsterPrefab;
+                return championMonsterPrefab;
             default:
                 return null;
         }

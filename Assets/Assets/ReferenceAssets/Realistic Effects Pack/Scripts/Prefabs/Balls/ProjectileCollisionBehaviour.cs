@@ -54,7 +54,7 @@ public class ProjectileCollisionBehaviour : MonoBehaviour
   }
 
   // Use this for initialization
-  private void Start()
+  public void Start()
   { 
     t = transform;
     GetEffectSettingsComponent(t);
