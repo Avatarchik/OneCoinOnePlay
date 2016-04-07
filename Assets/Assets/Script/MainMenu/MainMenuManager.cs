@@ -1,64 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using GooglePlayGames;
-using GooglePlayGames.BasicApi;
-using UnityEngine.SocialPlatforms;
-
 public class MainMenuManager : MonoBehaviour {
-
-    private bool isLoginSuccess = false;
 
     void Start()
     {
-        InitGPG();
-        LogingGPG();
+        GPG_Controller.InitGPG();
+        GPG_Controller.LoginGPG();
     }
-
-    public void InitGPG()
-    {
-        // Activate the Google Play Games platform
-        PlayGamesPlatform.Activate();
-    }
-
-    public void LogingGPG()
-    {
-        Social.localUser.Authenticate((bool success) => {
-            // handle success or failure
-            if (success)
-            {
-                isLoginSuccess = true;
-            }
-            else
-            {
-                isLoginSuccess = false;
-            }
-        });
-    }
-
 	public void GameStart()
     {
-        if(isLoginSuccess)
-        {
-            SceneManager.LoadSceneAsync("InGame");
-        }
-        else
-        {
-            LogingGPG();
-        }
-        
+        SceneManager.LoadSceneAsync("InGame");
     }
 
     public void OnClickLeaderBoard()
     {
-        // show leaderboard UI
-        Social.ShowLeaderboardUI();
+        GPG_Controller.ShowLeaderBoardUI();
     }
 
     public void OnClickAchivement()
     {
-        // show achievements UI
-        Social.ShowAchievementsUI();
+        GPG_Controller.ShowAchievementUI();
     }
 
     public void GameExit()

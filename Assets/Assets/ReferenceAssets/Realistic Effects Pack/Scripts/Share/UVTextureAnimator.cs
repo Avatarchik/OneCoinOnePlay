@@ -65,8 +65,8 @@ internal class UVTextureAnimator : MonoBehaviour
         GetComponent<Renderer>().material.SetTextureOffset("_BumpMap", offset);
       }
       if (IsBump) {
-        GetComponent<Renderer>().material.SetTextureScale("_HeightMap", size);
-        GetComponent<Renderer>().material.SetTextureOffset("_HeightMap", offset);
+        //GetComponent<Renderer>().material.SetTextureScale("_HeightMap", size);
+        //GetComponent<Renderer>().material.SetTextureOffset("_HeightMap", offset);
       }
     }
   }

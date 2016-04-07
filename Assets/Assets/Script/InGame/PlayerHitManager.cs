@@ -6,30 +6,37 @@ public class PlayerHitManager : MonoBehaviour {
     [SerializeField]
     private PlayerStatus playerStatus;
     [SerializeField]
-    private GameObject playerDeadEffect;
-    private bool isPlayerDead = false;
+    private GameObject prefabDeadEffect;
+    private bool _isTriggerOff = false;
+    public bool isTriggerOff
+    {
+        set { _isTriggerOff = value; }
+    }
 
     public void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Monster") && 
-            (isPlayerDead == false))
+            (_isTriggerOff == false))
         {
-            isPlayerDead = true;
-            playerStatus._isDead = true;
-            playerDeadEffect.SetActive(true);
+            _isTriggerOff = true;
+            playerStatus.isDead = true;
+
+            Vector3 effectPos = gameObject.transform.position;
+            effectPos.y += 1.5f;
+            Instantiate(prefabDeadEffect,
+                effectPos, new Quaternion(0, 0, 0, 0));
+            DeadProcess();
         }
     }
 
-    //private IEnumerator DeadProccessing()
-    //{
-    //    Vector3 pos = gameObject.transform.position;
-    //    float sec = 2.0f;
-    //    while (sec > 0.0f)
-    //    {
-    //        pos.y -= 0.05f;
-    //        gameObject.transform.position = pos;
-    //        yield return new WaitForSeconds(0.01f);
-    //        sec -= 0.01f;
-    //    }
-    //}
+    private void DeadProcess()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void ReviveProcess()
+    {
+        // to do
+    }
+    
 }

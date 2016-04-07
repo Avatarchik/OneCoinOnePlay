@@ -24,12 +24,11 @@
 
 public static class GPGService
 {
-        public const string leaderboard__ = "CgkIm5OM3LcHEAIQBg"; // <GPGSID>
-        public const string achievement_0 = "CgkIm5OM3LcHEAIQAQ"; // <GPGSID>
-        public const string achievement_1 = "CgkIm5OM3LcHEAIQAg"; // <GPGSID>
+        public const string leaderboard___ = "CgkIm5OM3LcHEAIQBg"; // <GPGSID>
+        public const string achievement_ = "CgkIm5OM3LcHEAIQAQ"; // <GPGSID>
         public const string achievement_2 = "CgkIm5OM3LcHEAIQAw"; // <GPGSID>
+        public const string achievement__ = "CgkIm5OM3LcHEAIQBw"; // <GPGSID>
         public const string achievement_3 = "CgkIm5OM3LcHEAIQBA"; // <GPGSID>
-        public const string achievement_4_ = "CgkIm5OM3LcHEAIQBQ"; // <GPGSID>
 
 }
 

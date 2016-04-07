@@ -60,6 +60,8 @@ public class Zombie : MonoBehaviour {
             sec -= 0.05f;
         }
         gameObject.SetActive(false);
+        // 테스트 업적 - 좀비를 10마리 퇴치해라!.
+        GPG_Controller.IncrementAchievement("CgkIm5OM3LcHEAIQAg");
     }
     IEnumerator MovingProcess()
     {

@@ -21,13 +21,13 @@ public class TouchMoveProcess : MonoBehaviour
 
     [SerializeField]
     private GameObject joyStickBack;
-    private float radiusOfJoySticBack;
+    private float radiusOfJoyStickBack;
     [SerializeField]
     private GameObject joyStickFront;
 
     private Vector3 dirVector;
     private float moveSpeed = 1.5f;
-    private float joyStickSpeed = 2.0f;
+    private float joyStickSpeed = 3.0f;
 
     private Vector3 startPointXZ;
     private Vector3 endPointXZ;
@@ -42,7 +42,7 @@ public class TouchMoveProcess : MonoBehaviour
     void Start()
     {
         UISprite spr = joyStickBack.GetComponent<UISprite>();
-        radiusOfJoySticBack = spr.width / 2;
+        radiusOfJoyStickBack = spr.width / 2;
         screenHalfWidth = Screen.width / 2;
     }
 
@@ -59,7 +59,7 @@ public class TouchMoveProcess : MonoBehaviour
         {
             case TouchPhase.Began:
                 {
-                    JoyStickPosInit();
+                    //JoyStickPosInit();
                     CalcScreenToWorldPoint(POINT_TYPE.START_POINT);
                     FollowTouchPoint();
                 }
@@ -83,11 +83,13 @@ public class TouchMoveProcess : MonoBehaviour
 
             case TouchPhase.Ended:
                 {
+                    StopCharacter();
                     JoyStickRePos();
                 }
                 break;
             case TouchPhase.Canceled:
                 {
+                    StopCharacter();
                     JoyStickRePos();
                 }
                 break;
@@ -117,18 +119,25 @@ public class TouchMoveProcess : MonoBehaviour
 
     private void MoveCharacter()
     {
-        if (CalcDirVector())
-        {
-            chController.Move(dirVector * Time.deltaTime * moveSpeed);
-            chAnimator.SetBool("Moving", true);
-            chAnimator.SetBool("Running", true);
-        }
-        else
-        {
-            chAnimator.SetBool("Moving", false);
-            chAnimator.SetBool("Running", false);
-            return;
-        }
+        CalcDirVector();
+        chController.Move(dirVector * Time.deltaTime * moveSpeed);
+        chAnimator.SetBool("Moving", true);
+        chAnimator.SetBool("Running", true);
+        //if (CalcDirVector())
+        //{
+        //    chController.Move(dirVector * Time.deltaTime * moveSpeed);
+        //    chAnimator.SetBool("Moving", true);
+        //    chAnimator.SetBool("Running", true);
+        //}
+        //else
+        //{
+        //}
+    }
+
+    private void StopCharacter()
+    {
+        chAnimator.SetBool("Moving", false);
+        chAnimator.SetBool("Running", false);
     }
 
     private bool CalcDirVector()
@@ -158,6 +167,10 @@ public class TouchMoveProcess : MonoBehaviour
 
         }
     }
+
+    /// <summary>
+    /// 터치시마다 가상 조이스틱 위치를 해당 지점으로 초기화한다. ( Don't use )
+    /// </summary>
     private void JoyStickPosInit()
     {
         joyStickFront.transform.position = screenToWorldPoint;
@@ -188,7 +201,7 @@ public class TouchMoveProcess : MonoBehaviour
         Vector3 endVec = _toWorldPoint;
         float distance = Vector3.Distance(startVec, endVec);
 
-        if (distance <= radiusOfJoySticBack) return true;
+        if (distance <= radiusOfJoyStickBack) return true;
         else return false;
     }
 

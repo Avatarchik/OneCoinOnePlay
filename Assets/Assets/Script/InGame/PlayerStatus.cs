@@ -56,13 +56,13 @@ public class PlayerStatus : MonoBehaviour
         get { return skill_Bomb; }
     }
 
-    private bool isDead = false;
-    public bool _isDead
+    private bool _isDead = false;
+    public bool isDead
     {
-        get { return isDead; }
+        get { return _isDead; }
         set
         {
-            isDead = value;
+            _isDead = value;
             del_deadProcess();
         }
     }
