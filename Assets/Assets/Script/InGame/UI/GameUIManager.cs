@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 public class GameUIManager : MonoBehaviour {
 
     [SerializeField]
+    private PlayerStatus playerStatus;
+    [SerializeField]
     private PlayerAttackManager playerAtkMgr;
     [SerializeField]
     private PlayerSkillManager playerSkillMgr;
@@ -52,10 +54,16 @@ public class GameUIManager : MonoBehaviour {
         ScaleUpEffect(obj_popupDieMenu);
     }
 
+    public void ClickOneMoreChance()
+    {
+        PopupCloseDieMenu();
+        playerStatus.isDead = false;
+    }
+
     public void PopupCloseMenu() { ScaleDownEffect("AfterCloseMenu", obj_popupMenu); }
     private void AfterCloseMenu() { obj_popupMenu.SetActive(false); }
 
-    public void PopupCLoseDieMenu() { ScaleDownEffect("AfterCloseDieMenu", obj_popupDieMenu); }
+    public void PopupCloseDieMenu() { ScaleDownEffect("AfterCloseDieMenu", obj_popupDieMenu); }
     private void AfterCloseDieMenu() { obj_popupDieMenu.SetActive(false); }
 
     private void ScaleUpEffect(GameObject popupObj)

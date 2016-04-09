@@ -33,10 +33,6 @@ public class PlayerHitManager : MonoBehaviour {
     {
         gameObject.SetActive(false);
     }
-
-    public void ReviveProcess()
-    {
-        // to do
-    }
+    
     
 }

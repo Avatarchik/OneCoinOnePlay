@@ -39,8 +39,9 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(GameLevelController());
     }
 
-    public void GameStart()
+    public void GameReStart()
     {
+        uiManager.PopupCloseDieMenu();
         gameTimer.ReStartGameTimer();
         gameMonGenerator.StartMonSpawn();
     }

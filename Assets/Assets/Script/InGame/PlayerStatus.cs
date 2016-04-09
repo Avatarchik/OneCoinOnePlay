@@ -14,8 +14,11 @@ public class PlayerStatus : MonoBehaviour
 
     private delegate void PlayerDeadProcess();
     private PlayerDeadProcess del_deadProcess;
+    private delegate void PlayerReviveProcess();
+    private PlayerReviveProcess del_reviveProcess;
     void Start()
     {
+        del_reviveProcess = gameManager.GameReStart;
         del_deadProcess = gameManager.GameStop;
     }
 
@@ -63,7 +66,13 @@ public class PlayerStatus : MonoBehaviour
         set
         {
             _isDead = value;
-            del_deadProcess();
+            if (value) { del_deadProcess(); }
+            else
+            {
+                playerObject.GetComponent<PlayerHitManager>().isTriggerOff = false;
+                playerObject.SetActive(true);
+                del_reviveProcess();
+            }
         }
     }
     
