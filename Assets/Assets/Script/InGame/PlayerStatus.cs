@@ -9,8 +9,11 @@ public class PlayerStatus : MonoBehaviour
 
     [SerializeField]
     private GameObject playerObject;
+    
     [SerializeField]
     private GameManager gameManager;
+    [SerializeField]
+    private PlayerEffectManager playerEffectMgr;
 
     private delegate void PlayerDeadProcess();
     private PlayerDeadProcess del_deadProcess;
@@ -47,16 +50,22 @@ public class PlayerStatus : MonoBehaviour
     }
 
     [SerializeField]
-    private GameObject skill_Shield;
+    private GameObject _skillShield;
     public GameObject skillShield
     {
-        get { return skill_Shield; }
+        get { return _skillShield; }
     }
     [SerializeField]
-    private GameObject skill_Bomb;
+    private GameObject _skillBomb;
     public GameObject skillBomb
     {
-        get { return skill_Bomb; }
+        get { return _skillBomb; }
+    }
+    [SerializeField]
+    private GameObject _skillReviveShield;
+    public GameObject skillReviveShield
+    {
+        get { return _skillReviveShield; }
     }
 
     private bool _isDead = false;
@@ -66,11 +75,21 @@ public class PlayerStatus : MonoBehaviour
         set
         {
             _isDead = value;
-            if (value) { del_deadProcess(); }
+            if (value)
+            {
+                playerEffectMgr.DeadEffectOn();
+                playerObject.SetActive(false);
+                del_deadProcess();
+            }
             else
             {
-                playerObject.GetComponent<PlayerHitManager>().isTriggerOff = false;
+                CharacterController chController = playerObject.GetComponent<CharacterController>();
+
+                playerEffectMgr.ReviveEffectOn();
                 playerObject.SetActive(true);
+                chController.detectCollisions = false;
+                playerObject.GetComponent<PlayerSkillManager>().Skill_ReviveShieldStart();
+                chController.detectCollisions = true;
                 del_reviveProcess();
             }
         }
