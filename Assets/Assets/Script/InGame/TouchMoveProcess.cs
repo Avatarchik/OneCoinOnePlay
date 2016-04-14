@@ -123,15 +123,6 @@ public class TouchMoveProcess : MonoBehaviour
         chController.Move(dirVector * Time.deltaTime * moveSpeed);
         chAnimator.SetBool("Moving", true);
         chAnimator.SetBool("Running", true);
-        //if (CalcDirVector())
-        //{
-        //    chController.Move(dirVector * Time.deltaTime * moveSpeed);
-        //    chAnimator.SetBool("Moving", true);
-        //    chAnimator.SetBool("Running", true);
-        //}
-        //else
-        //{
-        //}
     }
 
     private void StopCharacter()

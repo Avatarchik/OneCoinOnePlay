@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private MonsterGenerator gameMonGenerator;
     [SerializeField]
+    private MeteoGenerator meteoGenerator;
+    [SerializeField]
     private GameTimer gameTimer;
     [SerializeField]
     private GameMessage gameMessage;
@@ -35,6 +37,7 @@ public class GameManager : MonoBehaviour {
         curGameDiffLevel = arr_gameLevel[0].gameLevel;
 
         gameMonGenerator.Init(arr_gameLevel);
+        meteoGenerator.Init();
 
         StartCoroutine(GameLevelController());
     }
