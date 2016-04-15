@@ -1,6 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
+public class EffectEventArgsData : EventArgs
+{
+    public string objName;
+}
+
 public class EffectSettings : MonoBehaviour
 {
 	public float ColliderRadius = 0.2f;
@@ -48,9 +53,12 @@ public class EffectSettings : MonoBehaviour
 	}
 	public void OnEffectDeactivatedHandler()
 	{
-		var handler = EffectDeactivated;
+        EffectEventArgsData eftEventArg = new EffectEventArgsData();
+        eftEventArg.objName = gameObject.name;
+
+        var handler = EffectDeactivated;
 		if (handler != null)
-			handler(this, EventArgs.Empty);
+			handler(this, eftEventArg);
 	}
 	
 	public void Deactivate()

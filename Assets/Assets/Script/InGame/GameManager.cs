@@ -37,7 +37,11 @@ public class GameManager : MonoBehaviour {
         curGameDiffLevel = arr_gameLevel[0].gameLevel;
 
         gameMonGenerator.Init(arr_gameLevel);
+
         meteoGenerator.Init();
+        meteoGenerator.genTime = 1.0f;
+        meteoGenerator.genMeteoNum = 1;
+        meteoGenerator.StartGenMeteoProcess();
 
         StartCoroutine(GameLevelController());
     }
