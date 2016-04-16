@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour {
 
         meteoGenerator.Init();
         meteoGenerator.genTime = 1.0f;
-        meteoGenerator.genMeteoNum = 1;
+        meteoGenerator.genMeteoNum = 15;
         meteoGenerator.StartGenMeteoProcess();
 
         StartCoroutine(GameLevelController());

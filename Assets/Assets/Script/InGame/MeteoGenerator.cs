@@ -31,13 +31,13 @@ public class MeteoGenerator : MonoBehaviour {
         {
             EffectSettings settings = meteoList[idx].GetComponent<EffectSettings>();
             settings.EffectDeactivated += (object sender, System.EventArgs e) =>
-                {
+            {
                     EffectEventArgsData arg = e as EffectEventArgsData;
                     int meteoIdx = int.Parse(arg.objName);
                     Vector3 pos = meteoList[meteoIdx].transform.position;
                     pos.y = 10;
                     meteoList[meteoIdx].transform.position = pos;
-                };
+            };
         }
     }
 
