@@ -113,7 +113,8 @@ public class ProjectileCollisionBehaviour : MonoBehaviour
 
     public void OnTriggerEnter(Collider collision)
     {
-        if(collision.CompareTag("Skill_Shield"))
+        if (collision.CompareTag("Skill_Shield") ||
+            (collision.CompareTag("Player")))
         {
             CollisionEnter();
         }

@@ -60,7 +60,6 @@ public class MonsterGenerator : MonoBehaviour {
             monsterList.Add(new List<GameObject>());
             CreateMonster(idx, gameLevelGroups[idx].gameMobMaxNum);
         }
-        StartMonSpawn();
     }
 
     public void StartMonSpawn() { StartCoroutine(monSpawnCoroutine); }

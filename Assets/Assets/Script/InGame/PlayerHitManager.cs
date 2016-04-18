@@ -9,7 +9,8 @@ public class PlayerHitManager : MonoBehaviour {
     public void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Monster") ||
-            collision.gameObject.CompareTag("FireMeteo")
+            collision.gameObject.CompareTag("FireMeteo") ||
+            collision.gameObject.CompareTag("MissileTrap")
             ) 
         {
             playerStatus.isDead = true;

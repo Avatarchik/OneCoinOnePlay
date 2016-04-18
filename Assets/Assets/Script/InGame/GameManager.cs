@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour {
     private GameMessage gameMessage;
     [SerializeField]
     private GameUIManager uiManager;
+    [SerializeField]
+    private MissileTrapManager misTrapManager;
 
     private GameLevel[] arr_gameLevel;
     private int curGameDiffLevel = 0;
@@ -40,8 +42,12 @@ public class GameManager : MonoBehaviour {
 
         meteoGenerator.Init();
         meteoGenerator.genTime = 1.0f;
-        meteoGenerator.genMeteoNum = 15;
+        meteoGenerator.genMeteoNum = 1;
         meteoGenerator.StartGenMeteoProcess();
+
+        // 미사일 트랩 test..
+        misTrapManager.GetTrap(0).Init();
+        misTrapManager.GetTrap(0).StartMissileTrap();
 
         StartCoroutine(GameLevelController());
     }
