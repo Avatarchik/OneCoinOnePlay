@@ -9,6 +9,9 @@ public class MissileTrapController : MonoBehaviour {
     private GameObject[] missileObjects;
     private int missileNum;
 
+    [SerializeField]
+    private PlayerStatus playerStatus;
+
     private IEnumerator trapCoroutine;
 
     private float _genTime;
@@ -29,6 +32,15 @@ public class MissileTrapController : MonoBehaviour {
                 EffectEventArgsData arg = e as EffectEventArgsData;
                 int MissileIdx = int.Parse(arg.objName);
                 missileObjects[MissileIdx].transform.position = originPos.position;
+            };
+
+            settings.CollisionEnter += (object sender, CollisionInfo info) =>
+            {
+                if((info.Hit.transform.CompareTag("Player")) &&
+                   (playerStatus.isDead == false))
+                {
+                    playerStatus.isDead = true;
+                }
             };
         }
 

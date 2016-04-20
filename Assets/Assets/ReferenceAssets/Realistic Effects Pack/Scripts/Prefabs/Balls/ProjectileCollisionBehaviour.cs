@@ -110,15 +110,7 @@ public class ProjectileCollisionBehaviour : MonoBehaviour
         GetTargetHit();
         InitRandomVariables();
     }
-
-    public void OnTriggerEnter(Collider collision)
-    {
-        if (collision.CompareTag("Skill_Shield") ||
-            (collision.CompareTag("Player")))
-        {
-            CollisionEnter();
-        }
-    }
+    
 
     private void Update()
     {
@@ -142,6 +134,7 @@ public class ProjectileCollisionBehaviour : MonoBehaviour
         if (Physics.Raycast(tRoot.position, direction, out raycastHit, distanceNextFrame + effectSettings.ColliderRadius, effectSettings.LayerMask))
         {
             endPoint = raycastHit.point - direction * effectSettings.ColliderRadius;
+            hit = raycastHit;
             CollisionEnter();
         }
         if (raycastHit.transform != null)

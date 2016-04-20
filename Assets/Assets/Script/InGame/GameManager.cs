@@ -42,14 +42,14 @@ public class GameManager : MonoBehaviour {
 
         meteoGenerator.Init();
         meteoGenerator.genTime = 1.0f;
-        meteoGenerator.genMeteoNum = 1;
+        meteoGenerator.genMeteoNum = 5;
         meteoGenerator.StartGenMeteoProcess();
 
         // 미사일 트랩 test..
         misTrapManager.GetTrap(0).Init();
         misTrapManager.GetTrap(0).StartMissileTrap();
 
-        StartCoroutine(GameLevelController());
+        //StartCoroutine(GameLevelController());
     }
 
     public void GameReStart()

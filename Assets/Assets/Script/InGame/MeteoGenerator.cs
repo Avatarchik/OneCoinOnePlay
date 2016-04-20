@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class MeteoGenerator : MonoBehaviour {
     [SerializeField]
     private GameObject[] meteoList;
+    [SerializeField]
+    private PlayerStatus playerStatus;
    
     private int meteoMaxNumber = 16;
 
@@ -37,6 +39,15 @@ public class MeteoGenerator : MonoBehaviour {
                     Vector3 pos = meteoList[meteoIdx].transform.position;
                     pos.y = 10;
                     meteoList[meteoIdx].transform.position = pos;
+            };
+
+            settings.CollisionEnter += (object sender, CollisionInfo info) =>
+            {
+                if ((info.Hit.transform.CompareTag("PlayerMeteoHitter")) &&
+                   (playerStatus.isDead == false))
+                {
+                    playerStatus.isDead = true;
+                }
             };
         }
     }

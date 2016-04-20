@@ -47,7 +47,7 @@ public class BaseShotProcess : MonoBehaviour {
     public void OnTriggerEnter(Collider coll)
     {
         if(coll.tag.Equals("Monster") ||
-          (coll.tag.Equals("Wall")))
+          (coll.tag.Equals("Map_Wall")))
         {
             StopCoroutine(shotMoveRoutine);
             shotParticle.Stop();
